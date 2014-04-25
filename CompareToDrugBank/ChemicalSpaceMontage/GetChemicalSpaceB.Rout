@@ -1,0 +1,115 @@
+
+R version 3.0.2 (2013-09-25) -- "Frisbee Sailing"
+Copyright (C) 2013 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> ##################
+> library(ChemmineR)
+> library(rgl)
+> #################
+> 
+> sdfset_pestglos<-read.SDFset("Clean.chemicalize_PESTGLOS_pdf.sdf")
+Warning message:
+In read.SDFset("Clean.chemicalize_PESTGLOS_pdf.sdf") :
+  26 invalid SDFs detected. To fix, run: valid <- validSDF(sdfset); sdfset <- sdfset[valid]
+> cid(sdfset_pestglos)<-sdfid(sdfset_pestglos)
+Warning message:
+In `cid<-`(`*tmp*`, value = c("zinc, manganeso", "Electrum", "trichlorophenyl ethanol",  :
+  The values in the CMP ID slot are not unique anymore. To fix this, run: cid(sdfset) <- makeUnique(cid(sdfset))
+> 
+> sdfset<-read.SDFset("all.sdf")
+> cid(sdfset)<-datablocktag(sdfset,tag="DRUGBANK_ID")
+> 
+> sdfset_approved<-read.SDFset("approved.sdf")
+> cid(sdfset_approved)<-datablocktag(sdfset_approved,tag="DRUGBANK_ID")
+> 
+> sdfset_small_molecule<-read.SDFset("small_molecule.sdf")
+> cid(sdfset_small_molecule)<-datablocktag(sdfset_small_molecule,tag="DRUGBANK_ID")
+> 
+> sdfset_experimental<-read.SDFset("experimental.sdf")
+> cid(sdfset_experimental)<-datablocktag(sdfset_experimental,tag="DRUGBANK_ID")
+> 
+> sdfset_nutraceutical<-read.SDFset("nutraceutical.sdf")
+> cid(sdfset_nutraceutical)<-datablocktag(sdfset_nutraceutical,tag="DRUGBANK_ID")
+> 
+> sdfset_illicit<-read.SDFset("illicit.sdf")
+> cid(sdfset_illicit)<-datablocktag(sdfset_illicit,tag="DRUGBANK_ID")
+> 
+> sdfset_withdrawn<-read.SDFset("withdrawn.sdf")
+> cid(sdfset_withdrawn)<-datablocktag(sdfset_withdrawn,tag="DRUGBANK_ID")
+> 
+> 
+> ###
+> approved_subset<-sdfset[datablocktag(sdfset, tag="DRUGBANK_ID")%in%datablocktag(sdfset_approved, tag="DRUGBANK_ID")]
+> 
+> small_molecule_subset<-sdfset[datablocktag(sdfset, tag="DRUGBANK_ID")%in%datablocktag(sdfset_small_molecule, tag="DRUGBANK_ID")]
+> 
+> experimental_subset<-sdfset[datablocktag(sdfset, tag="DRUGBANK_ID")%in%datablocktag(sdfset_experimental, tag="DRUGBANK_ID")]
+> 
+> nutraceutical_subset<-sdfset[datablocktag(sdfset, tag="DRUGBANK_ID")%in%datablocktag(sdfset_nutraceutical, tag="DRUGBANK_ID")]
+> 
+> illicit_subset<-sdfset[datablocktag(sdfset, tag="DRUGBANK_ID")%in%datablocktag(sdfset_illicit, tag="DRUGBANK_ID")]
+> 
+> withdrawn_subset<-sdfset[datablocktag(sdfset, tag="DRUGBANK_ID")%in%datablocktag(sdfset_withdrawn, tag="DRUGBANK_ID")]
+> ####
+> 
+> 
+> #############
+> library(rgl)
+> #############
+> load("all_drugbank_w_pestglos_coord.rda")
+> CoordSwitch<-c("coord_all.png","coord_approved.png", "coord_small_molecule.png","coord_experimental.png", "coord_nutraceutical.png", "coord_illicit.png", "coord_withdrawn.png")
+> ###########
+> ###########
+> ###########
+> ###########
+> rgl.open(); offset <- 50; par3d(windowRect=c(offset, offset, 640+offset, 640+offset))
+> rm(offset); rgl.clear(); rgl.viewpoint(theta=45, phi=30, fov=60, zoom=1)
+> #########
+> ############
+> coord_approved <-coord[rownames(coord)%in%cid(sdfset_pestglos), 1:3]
+> coord<-coord_approved
+> coord_all <- coord[,1:3]
+> coord<-coord_all
+> spheres3d(coord[,1], coord[,2], coord[,3], radius=0.005, color="red", alpha=1, shininess=20); aspect3d(1, 1, 1)
+> ############
+> ############
+> axes3d(col="black"); title3d("", "", "", "", "", col="black"); bg3d("white")
+> rgl.snapshot("Pestglos_rgl.png")
+> rgl.close()
+> ############
+> ############
+> 
+> ###########
+> ###########
+> ###########
+> rgl.open(); offset <- 50; par3d(windowRect=c(offset, offset, 640+offset, 640+offset))
+> rm(offset); rgl.clear(); rgl.viewpoint(theta=45, phi=30, fov=60, zoom=1)
+> #########
+> coord_all <- coord[,1:3]
+> coord<-coord_all
+> spheres3d(coord[,1], coord[,2], coord[,3], radius=0.005, color="black", alpha=1, shininess=20); aspect3d(1, 1, 1)
+> ############
+> coord_approved <-coord[rownames(coord)%in%cid(approved_subset), 1:3]
+> coord<-coord_approved
+> spheres3d(coord[,1], coord[,2], coord[,3], radius=0.005, color="blue", alpha=1, shininess=20); aspect3d(1, 1, 1)
+> ############
+> 0coord_small_molecule <- coord[rownames(coord)%in%cid(small_molecule_subset), 1:3]
+Error: unexpected symbol in "0coord_small_molecule"
+Execution halted
