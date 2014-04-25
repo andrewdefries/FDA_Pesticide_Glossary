@@ -1,0 +1,40 @@
+##################
+library(ChemmineR)
+#################
+files<-list.files(pattern=".sdf")
+################organize work vector
+WorkVector<-c("all.sdf","approved.sdf","Clean.chemicalize_PESTGLOS_pdf.sdf", "experimental.sdf","illicit.sdf", "nutraceutical.sdf","small_molecule.sdf","withdrawn.sdf")
+#################
+all_drugbank<-read.SDFset(files[1])
+
+cid(all_drugbank)<-datablocktag(all_drugbank,tag="DRUGBANK_ID")
+#################
+pestglos<-read.SDFset(files[3])
+
+cid(pestglos)<-sdfid(pestglos)
+#################
+all_drugbank_w_pestglos <-c(all_drugbank,pestglos)
+#################
+sdfset<-all_drugbank_w_pestglos
+
+valid <- validSDF(sdfset)
+
+sdfset <- sdfset[valid]
+
+apset<-sdf2ap(sdfset)
+
+sdfset<-sdfset[!sapply(as(apset, "list"), length)==1]
+
+#apset<-sdf2ap(sdfset)
+####
+#cluster apset
+clusters <- cmp.cluster(apset, cutoff = c(0.7))
+save(clusters, file="all_drugbank_w_pestglos_clusters.rda", compress=T)
+#embed clusters in a 3-dimensional space based on apset
+coord <- cluster.visualize(apset, clusters, size.cutoff=1, dimensions=3, quiet=TRUE)
+###
+save(coord, file="all_drugbank_w_pestglos_coord.rda", compress=T)
+###
+
+
+
