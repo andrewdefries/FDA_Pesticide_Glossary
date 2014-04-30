@@ -1,0 +1,30 @@
+#try to replace each line element with tab and no header: 
+###
+#everything before CAS > cmp
+#everything after "Use" > use
+#everything after "Category:" > category
+#everything after "Mol. Form.:" > mf
+#everything after "LMS Code:" > lms
+#everything after "Tolerances:" > tolerances
+#remove "Alternate Names:" 	sed 's/Alternate Names://g'
+#everything after "9CI [ \t]" > 9CI
+#everything after "IUPAC [ \t] > IUPAC
+#everything after "Trade [ \t]> tradename
+#everyting after "ISO [ \t]" > ISO
+#everything after "ANSI [ \t]" > ANSI
+###
+#
+#get each target and paste A B C D E F G
+
+#cmp_name	CAS	Use	Category	MolForm	LMS	Tolernances	AlternateNames
+
+
+#
+
+cat PESTGLOS_Part1 | sed 's/\=//g' | sed ':a;N;$!ba;s/\n/ /g' | sed 's/Use:/\nUse:/g'| sed 's/Tolerances:/\nTolerances:/g' | sed 's/Names:/\nNames:/g'| sed 's/Mol. Form.:/\nMol_Form:/g' | sed 's/Use:/Use:/g' | sed 's/Category:/\nCategory:/g' | sed 's/LMS Code:/\nLMS_Code:/g' | sed 's/Alternate/\nAlternate_Names:/g'| sed 's/foreign use/\nforeign_use:/g' | sed 's/IUPAC/\nIUPAC:/g' | sed 's/ISO/\nISO:/g' | sed 's/Other/\nOther:/g' | sed 's/9CI/\n9CI:/g' | sed 's/ANSI/\nANSI:/g' | sed 's/.*\([0-9]\{2\}\).*-.*\([0-9]\{2\}\).*-.*\([0-9]\{1\}\).*/\nCAS:\1-\2-\3/g'  | sed 's/- /-/g' > SoFar
+
+#to use this pipe as a model repurpose to dump to files to make a table fix name issue or use CAS for index
+
+#Lost the first name and three digits of the CAS code
+
+
