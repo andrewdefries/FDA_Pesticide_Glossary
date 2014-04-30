@@ -1,17 +1,42 @@
 #try to replace each line element with tab and no header: 
 ###
 #everything before CAS > cmp
+
 #everything after "Use" > use
+cat PESTGLOS_Part1 | sed -n 's/Use: //p' > Use
+
 #everything after "Category:" > category
+cat PESTGLOS_Part1 | sed -n 's/Category: //p' > Category
+
 #everything after "Mol. Form.:" > mf
+cat PESTGLOS_Part1 | sed -n 's/Mol.Form.: //p' > MF
+
 #everything after "LMS Code:" > lms
+cat PESTGLOS_Part1 | sed -n 's/LMS Code: //p' > LMS
+
 #everything after "Tolerances:" > tolerances
+cat PESTGLOS_Part1 | sed -n 's/Tolerances: //p' > Tolerances
+
 #remove "Alternate Names:" 	sed 's/Alternate Names://g'
+cat PESTGLOS_Part1 | sed -n 's/Alternate Names //p' > Alternate
+
 #everything after "9CI [ \t]" > 9CI
+cat PESTGLOS_Part1 | sed -n 's/9CI //p' > 9CI
+
 #everything after "IUPAC [ \t] > IUPAC
+cat PESTGLOS_Part1 | sed -n 's/IUPAC //p' > IUPAC
+
 #everything after "Trade [ \t]> tradename
+cat PESTGLOS_Part1 | sed -n 's/Trade //p' > Trade
+
 #everyting after "ISO [ \t]" > ISO
+cat PESTGLOS_Part1 | sed -n 's/ISO //p' > ISO
+
 #everything after "ANSI [ \t]" > ANSI
+cat PESTGLOS_Part1 | sed -n 's/ANSI //p' > ANSI
+
+paste IUPAC Alternate Use Trade  > TableDraft
+
 ###
 #
 #get each target and paste A B C D E F G
