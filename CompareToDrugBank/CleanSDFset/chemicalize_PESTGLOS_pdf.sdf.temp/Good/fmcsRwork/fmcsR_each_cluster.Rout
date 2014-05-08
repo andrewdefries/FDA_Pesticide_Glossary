@@ -1,0 +1,72 @@
+
+R version 3.0.3 (2014-03-06) -- "Warm Puppy"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> library(ChemmineR)
+> library(fmcsR)
+> #######################
+> data(sdfsample)
+> sdfset<-sdfsample
+> apset<-sdf2ap(sdfset)
+> cluster<-cmp.cluster(apset, cutoff=c(0.5,0.6,0.7,0.8))
+ |                                           / 0 % -                                           \ 1 % |                                           / 1 % -                                           \ 2 % |                                           / 2 % -                                           \ 3 % |                                           / 3 % -                                           \ 4 % |                                           / 4 % -                                           \ 5 % | /                                           - 6 % \                                           | 6 % /                                           - 7 % \                                           | 7 % / -                                           \ 8 % | /                                           - 9 % \                                           | 10 % /                                           - 10 % \                                           | 11 % /                                           - 11 % \                                           | 12 % /                                           - 12 % \                                           | 13 % /                                           - 13 % \                                           | 14 % /                                           - 14 % \                                           | 15 % /                                           - 15 % \                                           | 16 % /                                           - 16 % \                                           | 17 % /                                           - 17 % \                                           | 18 % /                                           - 18 % \                                           | 19 % /                                           - 19 % \                                           | 20 % /                                           - 20 % \                                           | 21 % /                                           - 21 % \                                           | 22 % /                                           - 22 % \                                           | 23 % /                                           - 23 % \ |                                           / 24 % -                                           \ 25 % |                                           / 25 % - \                                           | 26 % /                                           - 27 % \                                           | 27 % /                                           - 28 % \ |                                           / 29 % - \                                           | 30 % / -                                           \ 31 % | /                                           - 32 % \                                           | 32 % /                                           - 33 % \                                           | 33 % /                                           - 34 % \                                           | 34 % /                                           - 35 % \ |                                           / 36 % -                                           \ 36 % |                                           / 37 % -                                           \ 37 % |                                           / 38 % -                                           \ 38 % |                                           / 39 % -                                           \ 39 % |                                           / 40 % -                                           \ 40 % |                                           / 41 % -                                           \ 41 % |                                           / 42 % -                                           \ 42 % |                                           / 43 % -                                           \ 43 % |                                           / 44 % -                                           \ 44 % |                                           / 45 % -                                           \ 45 % |                                           / 46 % -                                           \ 46 % |                                           / 47 % -                                           \ 47 % |                                           / 48 % -                                           \ 48 % |                                           / 49 % -                                           \ 49 %                                           | 50 %
+sorting result...
+> 
+> #cid(sdfset)<-substring(gsub(" ","_",sdfid(sdfset)), 1, 20)
+> #cid(sdfset)<-gsub("\\=", "_", cid(sdfset))
+> #cid(sdfset)<-gsub("\\/", "_", cid(sdfset))
+> #cid(sdfset)<-gsub("\\?", "_", cid(sdfset))
+> #cid(sdfset)<-gsub(" ","_",cid(sdfset))
+> #######################
+> Work<-sort(unique(cluster$CLID_0.7))
+> cluster$ids<-seq_along(cluster$ids)
+> #######################
+> DoTheWork<-function(d){
++ #######################
++ load("fmcsR_space.rda")
++ #######################
++ sdfset<-sdfset[subset(cluster, cluster$CLID_0.7==Work[d])$ids]
++ ######################
++ #fmcsR the sdfset
++ ################
++ Name<-paste("fmcsR_cluster_", Work[d], ".png", sep="")
++ png(file=Name, width=2400, height=2400, units="px")
++ ##################
++ d <- sapply(cid(sdfset), function(x)
++ fmcsBatch(sdfset[x], sdfset, au=0, bu=0,matching.mode="aromatic")[,"Overlap_Coefficient"])
++ ##################
++ ##################
++ ##################
++ hc <- hclust(as.dist(1-d), method="complete")
++ hc[["labels"]] <- cid(sdfset)
++ plot(as.dendrogram(hc), edgePar=list(col=4, lwd=2), horiz=TRUE, main="hclust of fmcsR tanimoto distances")
++ dev.off()
++ ##################
++ 
++ #######################
++ }
+> d<-1:seq_along(Work)
+Warning message:
+In 1:seq_along(Work) :
+  numerical expression has 95 elements: only the first used
+> lapply(d, DoTheWork)
+terminate called after throwing an instance of 'std::out_of_range'
+  what():  basic_string::substr
+Aborted
