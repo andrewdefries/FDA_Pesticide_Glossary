@@ -3,7 +3,7 @@
 #everything before CAS > cmp
 
 #everything after "Use" > use
-cat PESTGLOS_Part1 | sed -n 's/Use: //p' > Use
+cat PESTGLOS_Part1 | sed -n 's/Use: //p' | sed 's/^/\"/' | sed 's/$/\"/' > Use
 
 #everything after "Category:" > category
 cat PESTGLOS_Part1 | sed -n 's/Category: //p' > Category
@@ -21,13 +21,13 @@ cat PESTGLOS_Part1 | sed -n 's/Tolerances: //p' > Tolerances
 cat PESTGLOS_Part1 | sed -n 's/Alternate Names //p' > Alternate
 
 #everything after "9CI [ \t]" > 9CI
-cat PESTGLOS_Part1 | sed -n 's/9CI //p' > 9CI
+cat PESTGLOS_Part1 | sed -n 's/9CI //p' | sed 's/^/\"/' | sed 's/$/\"/' > 9CI
 
 #everything after "IUPAC [ \t] > IUPAC
 cat PESTGLOS_Part1 | sed -n 's/IUPAC //p' > IUPAC
 
 #everything after "Trade [ \t]> tradename
-cat PESTGLOS_Part1 | sed -n 's/Trade //p' > Trade
+cat PESTGLOS_Part1 | sed -n 's/Trade //p' | sed 's/^/\"/' | sed 's/$/\"/' > Trade
 
 #everyting after "ISO [ \t]" > ISO
 cat PESTGLOS_Part1 | sed -n 's/ISO //p' > ISO
@@ -35,7 +35,14 @@ cat PESTGLOS_Part1 | sed -n 's/ISO //p' > ISO
 #everything after "ANSI [ \t]" > ANSI
 cat PESTGLOS_Part1 | sed -n 's/ANSI //p' > ANSI
 
-paste IUPAC Alternate Use Trade  > TableDraft
+##paste IUPAC Alternate Use Trade  > TableDraft  # to fix this fill the blank space made by missing IUPAC entries at the least with empty occurance of IUPAC: dso that the transpose step works 
+
+#paste MF IUPAC ANSI ISO 9CI LMS Trade Category Use  > TableDraft
+
+#paste 9CI Trade  Use  > TableDraft
+
+paste 9CI Use  > TableDraft
+
 
 ###
 #

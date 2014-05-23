@@ -1,0 +1,4 @@
+"V1" "V2"
+"586" "bis(1-methylethyl) 1,3-dithiolan-2-" "herbicide/fungicide"
+"750" "4-pentenyl 2-((2-furanylmethyl)(1H-" "herbicide/fungicide"
+"847" "diphenylmethanone O-(2,6-bis((4,6-" "herbicide/fungicide"

@@ -1,0 +1,4 @@
+"V1" "V2"
+"210" "2-hydroxy-N,N,N-trimethylethanamimium" "insecticide/fungicide"
+"318" "3-[3-(1,1'-biphenyl)-4-yl-1,2,3,4-" "insecticide/fungicide"
+"704" "5-chloro-N-(2-chloro-4-nitrophenyl)-2-" "insecticide/fungicide"
