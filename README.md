@@ -1,7 +1,12 @@
 FDA_Pesticide_Glossary
 ======================
 
-Chemical mining of pesticide glossary released by the FDA via this link:
+The large nearest neighbor tables may be viewed here:
+
+http://andrewdefries.github.io/FDA_Pesticide_Glossary/FDA_Pesticide_Glossary.html
+
+
+The Chemical mining of the FDA pesticide glossary released by the FDA via this link:
 
 http://www.fda.gov/Food/FoodborneIllnessContaminants/Pesticides/ucm113891.htm
 
