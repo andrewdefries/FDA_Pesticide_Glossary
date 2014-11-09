@@ -18,8 +18,45 @@ Compounds in the FDA pesticide data set are diverse spanning different domains o
 
 Chemically similar domains between FDA approved pesticides and the DrugBank database were visualized by pooling the compounds in an all-against-all comparison using the atom-pair similarity method. Results are shown in the CompareToDrugBank folder. 
 
+```
+library(ChemmineR)
+# load sdf file
+sdfset<-read.SDFset("mysdfset.sdf")
+
+# calculate atom pair from connection matrices
+apset<-sdf2ap(sdfset)
+
+# cluster compounds based on atom-pairs
+ 
+clusters<-cmp.cluster(apset, cutoff=0.7)
+
+coord<-cluster.visualize(clusters, dimensions=3)
+
+#visualize using rgl
+```
+
 ![Chemical space comparison](https://github.com/andrewdefries/FDA_Pesticide_Glossary/blob/master/CompareToDrugBank/ChemicalSpaceMontage/MontageLabels.png "Chemical space montage")
 
+The figure above is a multi-dimensional scaling (MDS) plot derived by comparisons of atom-pairs. Figure A. Shows the complete dataset (both FDA approved and drugbank compounds). B. Shows compounds FDA approved pharmaceuticals in the DrugBank dataset. Shows C. Shows small molecule compounds from DrugBank D. Shows compounds listed in the FDA pesticide dataset.
+
+```
+library(rgl)
+
+# provide coord file to rgl to plot spheres
+
+# setup rgl view
+rgl.open(); offset <- 50; par3d(windowRect=c(offset, offset, 640+offset, 640+offset))
+
+rm(offset); rgl.clear(); rgl.viewpoint(theta=45, phi=30, fov=60, zoom=1)
+
+spheres3d(coord[,1], coord[,2], coord[,3], radius=0.005, color="black", alpha=1, shininess=20); aspect3d(1, 1, 1)
+
+axes3d(col="black"); title3d("", "", "", "", "", col="black"); bg3d("white")
+
+rgl.snapshot("Out.png")
+
+rgl.close()
+```
 
 The drugbank dataset can be downloaded via:
 ```
