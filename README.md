@@ -5,15 +5,23 @@ The FDA hosts a number of resources related to food related health. Source infor
 
 http://www.fda.gov/Food/FoodborneIllnessContaminants/Pesticides/ucm113891.htm
 
-The data is provided in tables of a PDF file. The PDF format is problematic for downstream analysis using R. Full text was extracted to group pesticides by category and to perform an in-depth chemical analysis.
+The data is provided in tables of a PDF file. The PDF format is problematic for downstream analysis using R. Full text was extracted to group pesticides by category and to perform an in-depth chemical analysis. Structure data files (SDF) were derived by uploading a list of compunds to chemicalize.org. SDF files were used in chemical similarity calculations.
 
 A visual summary of similarity relationships is available as a nearest neighbor table here:
 
 http://andrewdefries.github.io/FDA_Pesticide_Glossary/FDA_Pesticide_Glossary.html
 
-Comparing FDA pesticides to compounds listed in teh DrugBank database
+Comparing FDA pesticides to DrugBank database
 ===================
 
+Compounds in the FDA pesticide data set are diverse spanning different domains of chemical space. The DrugBank database (http://www.drugbank.ca) contains compound that are FDA approved, withdrawn, illicit, and experimental. 
+
+Chemically similar domains between FDA approved pesticides and the DrugBank database were visualized by pooling the compounds in an all-against-all comparison using the atom-pair similarity method. Results are shown in the CompareToDrugBank folder. 
+
+![Chemical space comparison](https://github.com/andrewdefries/FDA_Pesticide_Glossary/blob/master/CompareToDrugBank/ChemicalSpaceMontage/MontageLabels.png "Chemical space montage")
+
+
+The drugbank dataset can be downloaded via:
 ```
 wget http://www.drugbank.ca/system/downloads/current/structures/all.sdf.zip
 
