@@ -28,16 +28,16 @@ apset<-sdf2ap(sdfset)
 
 # cluster compounds based on atom-pairs
  
-clusters<-cmp.cluster(apset, cutoff=0.7)
+clusters<-cmp.cluster(apset, cutoff=c(0.7))
 
-coord<-cluster.visualize(clusters, dimensions=3)
+coord <- cluster.visualize(apset, clusters, size.cutoff=1, dimensions=3, quiet=TRUE)
 
 #visualize using rgl
 ```
 
 ![Chemical space comparison](https://github.com/andrewdefries/FDA_Pesticide_Glossary/blob/master/CompareToDrugBank/ChemicalSpaceMontage/MontageLabels.png "Chemical space montage")
 
-The figure above is a multi-dimensional scaling (MDS) plot derived by comparisons of atom-pairs. Figure A. Shows the complete dataset (both FDA approved and drugbank compounds). B. Shows compounds FDA approved pharmaceuticals in the DrugBank dataset. Shows C. Shows small molecule compounds from DrugBank D. Shows compounds listed in the FDA pesticide dataset.
+The figure above is a multi-dimensional scaling (MDS) plot derived by comparisons of atom-pairs. Figure A. Shows the complete dataset (both FDA approved and drugbank compounds). B. Shows compounds FDA approved pharmaceuticals in the DrugBank dataset. Shows C. Shows small molecule compounds from DrugBank D. Shows compounds listed in the FDA pesticide dataset. Each panel was derived by visualizing the the MDS plot for each subset. The montage was made manually.
 
 ```
 library(rgl)
@@ -57,6 +57,20 @@ rgl.snapshot("Out.png")
 
 rgl.close()
 ```
+
+We can visualize subsets of this dataset in an interactive fashion using the browser and a webGL canvas. The data processing is similar to producing the MDS image with rgl. The outfile is specified as html.
+
+See GetMeCanvasBatch.R
+```
+#some setup omitted
+
+rgl.snapshot("pngName.png")
+
+writeWebGL(dir=file.path(getwd(), t), width=2800)
+
+rgl.close()
+```
+
 
 The drugbank dataset can be downloaded via:
 ```
