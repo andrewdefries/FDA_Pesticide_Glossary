@@ -5,6 +5,12 @@ The FDA hosts a number of resources related to food related health. Source infor
 
 http://www.fda.gov/Food/FoodborneIllnessContaminants/Pesticides/ucm113891.htm
 
+now hosted here by the Internet Archive:
+
+https://web.archive.org/web/20150106100910/http://www.fda.gov/food/foodborneillnesscontaminants/pesticides/ucm113891.htm
+
+https://web.archive.org/web/20151015080407/http://www.fda.gov/downloads/Food/FoodborneIllnessContaminants/ucm114655.pdf
+
 The data is provided in tables of a PDF file. The PDF format is problematic for downstream analysis using R. Full text was extracted to group pesticides by category and to perform an in-depth chemical analysis. Structure data files (SDF) were derived by uploading a list of compunds to chemicalize.org. SDF files were used in chemical similarity calculations.
 
 A visual summary of similarity relationships is available as a nearest neighbor table here:
